@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ball</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .main{
+            height: 100vh;
+            background: cadetblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .container{
+            width: 600px;
+            height: 500px;
+            background: chartreuse;
+            border: 5px solid #fff;
+            position: relative;
+        }
+        .ball{
+            
+            background: rgb(235, 5, 5);
+            border-radius: 50%;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        window.onload = function(){
+            let main = document.createElement('div');
+            main.classList.add('main');
+            document.querySelector('body').appendChild(main);
+
+            let container = document.createElement('div')
+            container.classList.add('container');
+            main.appendChild(container);
+            let left = 0;
+            let top =0;
+            let directin_vector=[5,5];
+            let ball_diameter= 80;
+            let ball_pos= [0,0];
+            let [cw, ch]= [600, 500];
+            function createBall(diameter){
+                let ball = document.createElement('div');
+                ball.classList.add('ball');
+                ball.style.width= `${diameter}px`
+                ball.style.height= `${diameter}px`
+                ball.style.left=`${ball_pos[0]}px`
+                ball.style.top=`${ball_pos[1]}px`
+                return ball;
+            }
+            function moveBall(){
+                let [dx,dy] = directin_vector;
+                ball_pos[0] +=dx;
+                ball_pos[1] +=dy;
+                ball.style.left=`${ball_pos[0]}px`
+                ball.style.top=`${ball_pos[1]}px`
+                collision()
+            }
+            function collision(){
+                if(ball_diameter+ball_pos[0]>=cw || ball_pos[0]<0)
+                directin_vector[0] *=-1;
+                if(ball_diameter+ball_pos[1]>=ch || ball_pos[1]<0)
+                directin_vector[1] *=-1;
+
+            }
+            let ball = createBall(ball_diameter);
+            container.appendChild(ball);
+            setInterval(moveBall,50);
+        }
+        
+    </script>
+</body>
+</html>
